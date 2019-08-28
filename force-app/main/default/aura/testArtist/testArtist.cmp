@@ -1,0 +1,19 @@
+<aura:component controller="artistCatalogController" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="songList" type="Album__c[]" />
+    <aura:attribute name="albumID" type="String" /> 
+    <aura:attribute name="showSongs" type="Boolean" default="true"/>
+    
+    <div style="width:100%" >
+        <p class="slds-m-around_xx-small"> <lightning:button aura:id="showButton" label="Show songs" onclick="{!c.getSongDetails}" /></p>
+        <aura:if isTrue="{!v.showSongs}">
+            <div class="slds-p-around_xx-small slds-m-around_xx-small slds-align_absolute-center" >
+                <ol class="slds-list--ordered">
+                    <aura:iteration items="{!v.songList}" var="song">
+                        <li style="text-align:justify"> {!song.Name} &nbsp; {!song.Duration__c} </li>      
+                    </aura:iteration>
+                </ol>
+            </div>
+            <lightning:button aura:id="hideButton" class="slds-hide slds-m-bottom_medium slds-align_absolute-center" label="Hide songs" onclick="{!c.hideSong}"/>
+        </aura:if>
+    </div>	
+</aura:component>

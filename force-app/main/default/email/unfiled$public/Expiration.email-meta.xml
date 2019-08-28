@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Expiration</name>
+    <style>none</style>
+    <subject>Subscription expires in two days!</subject>
+    <textOnly>Dear subscriber:
+
+We hope you enjoy Spotiforce and find it useful and enjoyable. We would like to remind you that your subscription expires in 2 days. If you&#39;d like to renew your subscription, click the renewal button on your home page.  Do not hesitate to contact us if you have questions, just write to e-mail provided on the contact section.
+
+We hope to have you back soon!
+
+Spotiforce Support Team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

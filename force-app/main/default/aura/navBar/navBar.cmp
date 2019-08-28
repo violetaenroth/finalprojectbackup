@@ -1,0 +1,32 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+    <div style="position:relative;height:100px" class="myNavbar">
+        <header >
+            <nav >
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_3-of-12">
+                        <h1 class="slds-m-around_medium" style="font-size:1.5em"> SPOTIFORCE </h1>
+                    </div>
+                    <div class="slds-col slds-size_9-of-12">   
+                        <ul class="slds-float_right slds-list--horizontal">
+                            <li class="slds-m-around_medium">
+                                <a href="https://spotiforcecommunity-developer-edition.na85.force.com/test/s/" class="slds-m-around_small">
+                                    Home
+                                </a>
+                            </li>
+                            <li class="slds-m-around_medium">
+                                <a href="new-register" class="slds-m-around_small">
+                                    New register
+                                </a>
+                            </li>
+                            <li class="slds-m-around_medium">
+                                <a href="feedback" class="slds-m-around_small">
+                                    Feedback
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>  
+        </header>
+    </div>
+</aura:component>

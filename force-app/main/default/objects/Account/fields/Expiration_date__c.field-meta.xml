@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Expiration_date__c</fullName>
+    <description>Calculates the membership&#39;s expiration date (30 days after purchase)</description>
+    <externalId>false</externalId>
+    <formula>Purchase_date__c +30</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Expiration date</label>
+    <required>false</required>
+    <type>Date</type>
+</CustomField>

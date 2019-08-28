@@ -1,0 +1,14 @@
+.mainContainer.THIS {
+    background-color: #1f2833;
+    height: 100%;
+}
+
+.THIS .newStyle{
+    background-color:#0b0c10;
+    border-radius:1%;
+   border: 1px solid #45A29E; 
+}
+
+.THIS .avatarIcon{
+     clip-path: circle(60px at center);
+}

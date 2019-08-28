@@ -1,0 +1,73 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="artistCatalogController">
+   <aura:attribute name="artists" type="Contact[]"/> 
+  <aura:attribute name="users" type="Contact[]"/> 
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    
+    <div>
+    <lightning:card class="slds-p-around_medium slds-m-around_small artists">
+        <h2 class="slds-m-around_small slds-p-around_xx-small"> Explore new music </h2>
+        <div class="search-field">
+            <lightning:input class="slds-m-around_small" aura:id="nameFilter" label="Search" onchange="{!c.handleNameFilterChange}" />
+        </div>
+        <div class="slds-scrollable slds-m-around_small" style="height:300px;">
+            <aura:if isTrue="{!v.artists.length > 0}">
+                <p class="has-results">
+                    Showing {!v.artists.length} artist(s):
+                </p>
+                <div>
+                <ul class="slds-has-inline-block-links_space" style="height:150%">
+                    <aura:iteration items="{!v.artists}" var="artist">
+                        <li class="slds-m-around_xx-small">
+                                            <!-- <p class="slds-align_absolute-center avatarIcon" style="width:200px;height:200px;" >
+                                    <lightning:formattedRichText value="{!artist.Profile_pic__c}" />
+                                </p> -->
+                     
+                            <p style="text-align:center"><h6> {!artist.Name} </h6></p>
+                           <p class="slds-align_absolute-center"> <c:testAlbums artistID="{!artist.Id}"/></p>
+                        </li>
+                    </aura:iteration>
+                </ul> 
+                    </div>
+                <aura:set attribute="else">
+                    <p class="no-results">Nothing to show.</p>
+                </aura:set>
+            </aura:if>
+        </div>
+    </lightning:card>
+
+   
+    
+    <lightning:card class="slds-p-around_medium slds-m-around_small users">
+        <h2 class="slds-m-around_small slds-p-around_xx-small"> Explore other users </h2>
+          <div class="search-field">
+            <lightning:input class="slds-m-around_small" aura:id="nameFilterUsers" label="Search" onchange="{!c.handleUsernameFilterChange}" />
+        </div>
+         <div class="slds-scrollable" style="height:300px;">
+            <aura:if isTrue="{!v.users.length > 0}">
+                <p class="has-results">
+                    Showing {!v.users.length} user(s):
+                </p>
+                <div>
+                <ul class="slds-has-inline-block-links_space" style="height:150%">
+                    <aura:iteration items="{!v.users}" var="user">
+                        <li class="slds-m-around_xxx-small"> 
+                            <p class="slds-align_absolute-center avatarIcon" style="width:200px;height:200px;" >
+                                    <lightning:formattedRichText value="{!user.Profile_pic__c}" />
+                                </p>
+                                <p style="text-align:center"><h6> {!user.Name}</h6></p>
+                            <p style="text-align:center">{!user.Email}</p>
+                        </li>
+                    </aura:iteration>
+                </ul>
+                </div>
+                <aura:set attribute="else">
+                    <p class="no-results">Nothing to show.</p>
+                </aura:set>
+             </aura:if>
+        </div>
+    </lightning:card>
+          </div>
+	
+</aura:component>

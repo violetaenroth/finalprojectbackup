@@ -1,0 +1,23 @@
+.THIS .accountInfo{
+    background-color:#0b0c10;
+    border: 1px color #45A29E;  
+}
+
+.THIS .users{
+    background-color:#0b0c10;
+    border: 1px color #45A29E; 
+}
+
+.THIS .artists{
+    background-color:#0b0c10;
+    border: 1px color #45A29E; 
+}
+
+.THIS .musicForms{
+    background-color:#0b0c10;
+    border: 1px color #45A29E; 
+}
+
+.THIS .avatarIcon{
+     clip-path: circle(60px at center);
+}

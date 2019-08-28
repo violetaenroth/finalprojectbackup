@@ -1,0 +1,25 @@
+<aura:component controller="artistCatalogController" implements="forceCommunity:availableForAllPageTypes" access="global">
+    <aura:attribute name="albumList" type="Contact[]"/>
+    <aura:attribute name="artistID" type="String"/> 
+    <aura:attribute name="showAlbums" type="Boolean" default="true"/>
+    
+    <div style="width:80%" >
+        <p class="slds-m-around_xx-small slds-align_absolute-center"> <lightning:button aura:id="showButton" label="Show albums" onclick="{!c.getAlbumDetails}"/> </p>
+        <aura:if isTrue="{!v.showAlbums}">
+            <div class="slds-align_absolute-center" >
+                <ul style="width:60%">
+                    <aura:iteration items="{!v.albumList}" var="alb">
+                        <li style="text-align:center">
+                            <p class="slds-m-around_medium" style="width:90%; height:90%;"> <div class="slds-align_absolute-center"> <aura:unescapedHtml value="{!alb.Cover__c}"/></div></p>
+                            <p  class="slds-m-around_xx-small"> {!alb.Name} </p>
+                            <p  class="slds-m-around_xx-small"> {!alb.Release_Year__c} </p>
+                            <i><p  class="slds-m-around_xx-small"> {!alb.Description__c}</p></i>
+                            <p class="slds-align_absolute-center"><c:testArtist albumID="{!alb.Id}"/>  </p>
+                        </li>
+                    </aura:iteration>
+                </ul>
+            </div>   
+            <lightning:button aura:id="hideButton" class="slds-hide slds-align_absolute-center" label="Hide albums" onclick="{!c.hideAlbum}"/>
+        </aura:if>
+    </div>
+</aura:component>

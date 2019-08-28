@@ -1,0 +1,145 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="complainControler">
+    <aura:attribute name="firstName" type="String"/>
+    <aura:attribute name="lastName" type="String"/>
+    <aura:attribute name="email" type="String"/>
+    <aura:attribute name="type" type="String"/>
+    <aura:attribute name="description" type="String"/>
+    <aura:attribute name="phone" type="String"/>
+    
+    <aura:attribute name="MailingCity" type="String"/>
+    <aura:attribute name="MailingState" type="String"/>
+    <aura:attribute name="MailingCountry" type="String"/>
+    <aura:attribute name="MailingPostalCode" type="String"/>
+    <aura:attribute name="MailingStreet" type="String"/>
+    <aura:attribute name="subject" type="String"/>
+    <aura:attribute name="comments" type="String"/>
+    
+    <aura:attribute name="noContact" type="boolean" default="false"/>
+    <aura:attribute name="dispForm" type="boolean" default="false"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    
+    
+    <div class="mainContainer">
+        <div class="slds-align_absolute-center newStyle" style="width:70%">
+            <div class="slds-form slds-form_compound slds-align_absolute-center" style="width:90%"> 
+                <fieldset class="slds-form-element slds-m-top_large slds-m-bottom_large" style="width:85%">
+                    <h2 class="slds-m-around_small slds-p-around_xx-small">Feedback form</h2>
+                    <p class="slds-m-around_small slds-p-around_xx-small"> This form is dedicated to gather your suggestions, complaints or compliments.</p>
+                    <div class="slds-form-element__group slds-p-around_xx-small"> 
+                        <h6>Contact information</h6>
+                        <div class="slds-form-element__row slds-p-around_xx-small">
+                            <div class="slds-form-element slds-size_1-of-2"> 
+                                <lightning:input label="First Name" value="{!v.firstName}" required="true"/>
+                            </div>
+                            <div class="slds-form-element slds-size_1-of-2"> 
+                                <lightning:input label="Last name" value="{!v.lastName}" required="true" />
+                            </div>
+                        </div>
+                        <div class="slds-form-element__row slds-p-around_xx-small">
+                            <div class="slds-form-element slds-size_1-of-1 slds-m-top_x-small"> 
+                                <lightning:input type="email" label="Email" value="{!v.email}" required="true"/> 
+                            </div>
+                        </div>
+                        <div class="slds-form-element__row slds-p-around_xx-small"> 
+                            <div class="slds-align_absolute-center slds-m-top_medium"> 
+                                <lightning:button aura:id="checkButton" label="Next" onclick="{!c.check}"/> 
+                            </div> 
+                        </div>            
+                        
+                        
+                        <aura:if isTrue="{!v.noContact}"> 
+                            <h6>Additional address information</h6>
+                            <div class="slds-form-element__row slds-p-around_xx-small">
+                                <div class="slds-form-element slds-size_1-of-2"> 
+                                    <lightning:input label="Country" value="{!v.MailingCountry}"/>
+                                </div>
+                                <div class="slds-form-element slds-size_1-of-2"> 
+                                    <lightning:input label="State" value="{!v.MailingState}"/>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-form-element__row slds-p-around_xx-small">
+                                <div class="slds-form-element slds-size_1-of-3"> 
+                                    <lightning:input label="City" value="{!v.MailingCity}"/>
+                                </div>
+                                <div class="slds-form-element slds-size_1-of-3 slds-m-top_x-small"> 
+                                    <lightning:input label="Street" value="{!v.MailingStreet}"/>
+                                </div>
+                                <div class="slds-form-element slds-size_1-of-3 slds-m-top_x-small"> 
+                                    <lightning:input label="Mailing Postal Code" value="{!v.MailingPostalCode}"/>
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row slds-p-around_xx-small"> 
+                                <div class="slds-align_absolute-center slds-m-top_medium"> 
+                                    <lightning:button label="Save" onclick="{!c.saveInfo}"/> 
+                                </div> 
+                            </div>
+                        </aura:if>
+                        
+
+                        <aura:if isTrue="{!v.dispForm}">
+                            <div class="slds-form-element__row slds-p-around_xx-small"> 
+                                <div class="slds-form-element slds-size_1-of-1">  
+                                    <lightning:select aura:id="selectedOption" label="Type of comment" value="{!v.type}" required="true">
+                                        <option value="">-- Choose one --</option>
+                                        <option value="Suggestion">Make a suggestion </option>
+                                        <option value="Bug">Report a bug</option>	
+                                        <option value="Compliment">Send a compliment </option>
+                                        <option value="Complain">Make a complain </option>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row slds-p-around_xx-small">      
+                                <div class="slds-form-element slds-size_1-of-2 slds-m-top_x-small"> 
+                                    <lightning:input label="Subject" value="{!v.subject}" required="true"/>
+                                </div>
+                            </div>          
+                            <div class="slds-form-element__row slds-p-around_xx-small"> 
+                                <div class="slds-form-element slds-size_1-of-1 slds-m-top_x-small">  
+                                    <lightning:textarea label="Description" value="{!v.description}" required="true"/> 
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row slds-p-around_xx-small"> 
+                                <div class="slds-form-element slds-size_1-of-1 slds-m-top_x-small">  
+                                    <lightning:textarea label="Additional comments are welcome aswell!" value="{!v.comments}" /> 
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row"> 
+                                <div class="slds-align_absolute-center slds-m-top_medium"> 
+                                    <lightning:button label="Submit" onclick="{!c.saveCase}"/> 
+                                </div> 
+                            </div>
+                        </aura:if>
+                    </div>
+                </fieldset>
+            </div> 
+        </div>
+    </div>
+    
+    
+    
+    <aura:if isTrue="{!v.isOpen}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel}"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <h2 class="slds-text-heading_medium slds-hyphenate">THANK YOU!</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p> Your feedback has been recorded. You'll be shortly recieving an email with the case-related details.
+                    </p>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" 
+                                      label="Close"
+                                      title="Close"
+                                      onclick="{!c.closeModel}"/>
+                </footer>
+            </div>
+        </section>     
+    </aura:if>
+</aura:component>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Type</fullName>
+    <inlineHelpText>Defines whether the account is for a user or an artist</inlineHelpText>
+    <type>Picklist</type>
+</CustomField>

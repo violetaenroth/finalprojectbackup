@@ -1,0 +1,7 @@
+<p>Dear {!Case.Contact}, we just wanted to let you know that we recieved your feedback and a new case
+<ul> <li>Case number: {!Case.CaseNumber}</li>
+ <li>Subject: {!Case.Subject}</li> 
+</ul>
+ has been recorded. We will investigate your submit and get back to you as soon as possible. </p>
+<p>Thank you!</p> 
+<p>Spotiforce Support Team.</p>

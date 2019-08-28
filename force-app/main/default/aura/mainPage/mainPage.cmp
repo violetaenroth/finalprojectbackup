@@ -1,0 +1,254 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId" access="global" controller="homeControler">
+    <aura:attribute name = "logIsOpen" type="boolean" default = "true"/>  
+    <aura:attribute name="email" type="String"/>
+    <aura:attribute name="password" type="String"/>
+    <aura:attribute name="purchaseDate" type="date"/>
+    <aura:attribute name="expDate" type="date"/>
+    
+    <aura:attribute name="account" type="String"/>
+    <aura:attribute name="contactId" type="Id"/>
+    <aura:attribute name="profilePic" type="String"/>
+    
+    <aura:attribute name="homeUserIsOpen" type="boolean" default="false"/>
+    
+    <aura:attribute name="activeSub" type="Boolean"/>
+    <aura:attribute name="modalUpload" type="Boolean" default="false"/>
+    <aura:attribute name="modalSubs" type="Boolean" default="false"/>
+    
+    <!--ARTIST'S HOMEPAGE ATTRIBUTES -->
+    <aura:attribute name="homeArtistIsOpen" type="boolean" default="false"/>
+    <aura:attribute name="createSong" type="Boolean" default="false"/>
+    <aura:attribute name="createAlbum" type="Boolean" default="false"/>
+    <aura:attribute name="albumName" type="String"/>
+    <aura:attribute name="songName" type="String"/>
+    <aura:attribute name="songDuration" type="String"/>
+    <aura:attribute name="albumReleaseYear" type="String"/>
+    <aura:attribute name="albumDescription" type="String"/>
+    <aura:attribute name="cover" type="String"/>
+    <aura:attribute name="relatedAlbum" type="String"/>
+    <aura:attribute name="Albums" type="Album__c[]"/>
+    
+    
+    <div class="mainContainer"> 
+        
+        <!-- GENERAL LOG IN FORM -->
+        
+        <aura:if isTrue="{!v.logIsOpen}">
+            <div class="slds-p-around_medium slds-align_absolute-center newStyle" style="width:70%">
+                <div class="slds-m-around_xx-large ">
+                    <h3 style="text-align:center" class="slds-p-around_xx-small slds-m-around_small"> Welcome!</h3>
+                    <div class="slds-form slds-form_compound" > 
+                        <fieldset class="slds-form-element">
+                            <h2 class="slds-m-around_small slds-p-around_xx-small" style="text-align:center">Log in to continue</h2>
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-1"> 
+                                        <lightning:input type="email" label="Email" value="{!v.email}" aura:id="logform" required="true" /> 
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-1"> 
+                                        <lightning:input type="password" label="Password" value="{!v.password}" aura:id="logform" required="true" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element__row"> 
+                                <div class="slds-align_absolute-center slds-m-top_medium">
+                                    <lightning:button label="Log in" onclick="{!c.showInfo}" /> 
+                                </div> 
+                            </div>
+                             <div class="slds-form-element__row"> 
+                                 <a href="new-register" class="slds-align_absolute-center slds-m-top_small"> 
+                                 New here? Sign up!</a>
+                            </div>
+                        </fieldset>
+                    </div> 
+                </div>
+            </div>
+        </aura:if>
+        
+
+        <!-- DISPLAY HOME FOR CUSTOMER OF TYPE USERS-->
+        
+        <aura:if isTrue="{!v.homeUserIsOpen}">
+            <div class="slds-grid slds-gutters slds-grid_align-space" style="width:90%">
+                <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-m-around_xxx-small">
+                    <span >
+                        <p class="slds-align_absolute-center">
+                            <article class="slds-card slds-p-around_small newStyle" style="width:70%">
+                                <header class="slds-media slds-media_center slds-align_absolute-center slds-m-top_medium">
+                                    <h6 style="text-align:center">Welcome back, {!v.account}</h6>
+                                </header>
+                                <div class="slds-align_absolute-center avatarIcon" style="width:200px;height:200px;">
+                                    <lightning:formattedRichText value="{!v.profilePic}" />
+                                </div>
+                                <div class="slds-card__body slds-card__body_inner">
+                                    <p class="slds-m-top_x-small slds-align_absolute-center"><b> Email:&nbsp; </b>{!v.email}</p> 
+                                    <p class="slds-m-top_x-small slds-align_absolute-center"> <b> Purchase date:&nbsp; </b> {!v.purchaseDate}</p> 
+                                    <p class="slds-m-top_x-small slds-align_absolute-center"> <b> Expiration date:&nbsp;</b> {!v.expDate}</p> 
+                                    <p class="slds-m-top_x-small slds-align_absolute-center slds-m-bottom_medium"> <lightning:button label="Renew your subscription" onclick="{!c.renewSubs}"/></p>
+                                </div>
+                            </article>
+                        </p>
+                    </span>
+                </div>
+                <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_8-of-12 slds-m-around_xxx-small">
+                     <c:displayArtistList/>
+                </div>
+            </div> 
+        </aura:if>
+        
+        
+        <!-- DISPLAY HOME FOR CUSTOMER OF TYPE ARTIST-->   
+        
+        <aura:if isTrue="{!v.homeArtistIsOpen}"> 
+            <div class="slds-grid slds-gutters slds-grid_align-space slds-wrap" style="width:90%">
+                <div class="slds-col slds-small-size_12-of-12  slds-medium-size_6-of-12 slds-large-size_4-of-12 slds-m-around_xxx-small">
+                    <span >
+                        <p class="slds-align_absolute-center">
+                            <article class="slds-card slds-p-around_small newStyle" style="width:70%">
+                                <header class="slds-media slds-media_center slds-align_absolute-center slds-m-top_medium">
+                                    <h6 style="text-align:center">Welcome back, {!v.account}</h6>
+                                </header>
+                                <div class="slds-align_absolute-center avatarIcon" style="width:200px;height:200px;">
+                                    <lightning:formattedRichText value="{!v.profilePic}" aura:id="profilepic"/>
+                                </div>
+                                <div class="slds-card__body slds-card__body_inner">
+                                    <p class="slds-m-top_x-small slds-align_absolute-center"><b> Email:&nbsp; </b>{!v.email}</p> 
+                                    <p class="slds-m-top_x-small slds-align_absolute-center"> <b> Purchase date:&nbsp; </b> {!v.purchaseDate}</p> 
+                                    <p class="slds-m-top_x-small slds-align_absolute-center"> <b> Exp date:&nbsp; </b> {!v.expDate}</p> 
+                                    <p class="slds-m-top_x-small slds-align_absolute-center slds-m-bottom_medium"> <lightning:button label="Renew your subscription" onclick="{!c.renewSubs}"/></p>
+                                </div>
+                            </article>
+                        </p>
+                    </span>
+                </div>
+                <div class="slds-col slds-small-size_12-of-12 slds-medium-size_6-of-12 slds-large-size_8-of-12 newStyle slds-m-around_xxx-small" style="width:60%">
+                    <p class="slds-m-around_medium slds-media_center slds-align_absolute-center"> 
+                        <lightning:button aura:id="albumClick" label="Create new album" onclick="{!c.openAlbumForm}" class="slds-align_absolute-center"/></p>
+                    <aura:if isTrue="{!v.createAlbum}">
+                        
+                        <div class="slds-form slds-form_compound slds-align_absolute-center" style="width:80%">
+                            
+                            <fieldset class="slds-form-element">
+                                <h6> Album info</h6>
+                                <div class="slds-form-element__row slds-p-around_xxx-small">
+                                    <div class="slds-form-element slds-size_1-of-1"> 
+                                        <lightning:input label="Name" value="{!v.albumName}" required="true" aura:id="regform"/> 
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row slds-p-around_xxx-small">
+                                    <div class="slds-form-element slds-size_1-of-3 slds-m-top_x-small"> 
+                                        <lightning:input label="Release Year" value="{!v.albumReleaseYear}" required="true" aura:id="regform" /> 
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row slds-p-around_xxx-small">
+                                    <div class="slds-form-element slds-size_1-of-2 slds-m-top_x-small"> 
+                                        <lightning:textarea label="Description" value="{!v.albumDescription}" required="true" aura:id="regform"/> 
+                                    </div>
+                                </div>
+                                <div class="slds-form-element__row slds-p-around_xxx-small">
+                                    <div class="slds-form-element slds-size_1-of-1 slds-m-top_x-small" style="width:90%">
+                                        <lightning:input type="file" label="Add an album cover" multiple="false" accept="image/png, image/jpeg, image/jpg" onchange="{! c.handleFilesChange }"/>
+                                        <lightning:inputRichText value="{!v.cover}" />
+                                    </div>
+                                </div>
+                                
+                                <p class="slds-m-around_medium"><lightning:button label="Create album" onclick="{!c.saveAlbum}" class="slds-align_absolute-center"/></p>
+                            </fieldset>
+                        </div>
+                    </aura:if>
+                    <p class="slds-m-around_medium slds-media_center slds-align_absolute-center">
+                        <lightning:button aura:id="songClick" label="Create new song" onclick="{!c.openSongForm}" class="slds-align_absolute-center"/></p>
+                    <!-- SONG FORM -->
+                    <div class="slds-align_absolute-center">
+                        <aura:if isTrue="{!v.createSong}">
+                            <div class="slds-form slds-form_compound" style="width:80%">
+                                
+                                <fieldset class="slds-form-element slds-align_absolute-center">
+                                    <h6> Song info</h6>
+                                    <div class="slds-form-element__row slds-p-around_xxx-small">
+                                        <div class="slds-form-element slds-size_1-of-1 slds-m-around_x-small"> 
+                                            <lightning:input label="Name" value="{!v.songName}" required="true" aura:id="regformSong"/> 
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__row slds-p-around_xxx-small">
+                                        <div class="slds-form-element slds-size_1-of-3 slds-m-around_x-small"> 
+                                            <lightning:input label="Song duration" value="{!v.songDuration}" required="true" aura:id="regformSong" /> 
+                                        </div>
+                                    </div>
+                                    <div class="slds-form-element__row slds-p-around_xxx-small">
+                                        <div class="slds-form-element slds-size_1-of-1 slds-m-around_x-small"> 
+                                            <lightning:select aura:id="selectedOption" label="Album" value="{!v.relatedAlbum}">
+                                                <option value="">-- Choose one --</option>
+                                                <aura:iteration items="{!v.Albums}" var="album">
+                                                    <option value="{!album.Name}" text="{!album.Name}"/>
+                                                </aura:iteration>
+                                            </lightning:select>
+                                        </div>
+                                    </div>
+                                    <p class="slds-m-around_medium">  <lightning:button label="Create song" onclick="{!c.saveSong}" class="slds-align_absolute-center"/> </p>
+                                </fieldset>
+                            </div>
+                        </aura:if>
+                    </div>
+                    
+                </div> 
+            </div>
+        </aura:if>
+        
+        
+        <!-- MODAL FOR SUCCESFUL SONG OR ALBUM UPLOAD -->
+        <aura:if isTrue="{!v.modalUpload}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel}"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 class="slds-text-heading_medium slds-hyphenate">Congrats!</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <p>Your content has been successfully uploaded!</p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Close"
+                                          title="Close"
+                                          onclick="{!c.closeModel}"/>
+                    </footer>
+                </div>
+            </section>          
+        </aura:if>
+        
+        
+        <!-- MODAL FOR SUCCESFUL RENEWAL -->
+        <aura:if isTrue="{!v.modalSubs}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel}"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Congrats!</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <p><b> Your subscription has has been successfully renewed :)</b>
+                        </p>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" 
+                                          label="Close"
+                                          title="Close"
+                                          onclick="{!c.closeModelSubs}"/>
+                    </footer>
+                </div>
+            </section>   
+        </aura:if>
+        
+    </div>
+</aura:component>

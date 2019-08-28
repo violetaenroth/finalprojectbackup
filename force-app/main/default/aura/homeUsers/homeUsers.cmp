@@ -1,0 +1,53 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="homeUsersControler">
+ <aura:attribute name="contacts" type="Contact[]"/> 
+  <aura:attribute name="users" type="Contact[]"/> 
+    
+<h4> Explore new music </h4>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}" />
+    <lightning:card title="Artists" class="slds-p-around_medium slds-m-around_small">
+        <div class="search-field">
+            <lightning:input class="slds-m-around_small" aura:id="nameFilter" label="Search" onchange="{!c.handleNameFilterChange}" />
+        </div>
+        <div>
+            <aura:if isTrue="{!v.contacts.length > 0}">
+                <p class="has-results">
+                    Showing {!v.contacts.length} artist(s):
+                </p>
+                
+                <ol class="slds-list_dotted">
+                    <aura:iteration items="{!v.contacts}" var="contact">
+                        <li class="slds-m-around_x-small">
+                            <a data-sfid="{!contact.Id}" onclick="{!c.handleClickUserName}" target="_blank">
+                                {!contact.Name}
+                            </a>
+                        </li>
+                    </aura:iteration>
+                </ol> 
+                <aura:set attribute="else">
+                    <p class="no-results">Nothing to show:(</p>
+                </aura:set>
+            </aura:if>
+        </div>
+    </lightning:card>
+  
+   
+    
+    <lightning:card title="Explore other users" class="slds-p-around_medium slds-m-around_small">
+                <ol class="slds-list_dotted">
+                    <aura:iteration items="{!v.users}" var="user">
+                        <li class="slds-m-around_x-small">
+                            <a data-sfid="{!user.Id}" onclick="{!c.handleClickUserName}" target="_blank">
+                                {!user.Name}
+                            </a>
+                            <!--<a class="user-name" onclick="{!c.handleClickUserName}" data-sfid="{!user.Id}" target="_blank">
+                                {!user.Name}
+                            </a> -->
+                        </li>
+                    </aura:iteration>
+                </ol>
+    </lightning:card>
+
+    
+    
+</aura:component>
